@@ -1,24 +1,29 @@
 import type { Component } from 'solid-js';
-import { createEffect, createSignal } from 'solid-js';
-import logo from './logo.svg';
+import {createSignal } from 'solid-js';
+
 import styles from './App.module.css';
 
 const App: Component = () => {
   const [first, setFirst] = createSignal("JSON");
-  const [count, setCount] = createSignal(0)
 const[data,setData]=createSignal([
   {
+    id:'1',
     name:"Test",
     email:"test@example.com",
   },
   {
+    id:'2',
     name:"data",
     email:"test@example.com",
   }
 ])
-  const currentCount = count();
+ 
   const handleClick =()=>{
-    setData([...data(), {name:"test1",email:"email@example.com"}])
+    setData([...data(), {id:"3", name:"test1",email:"email@example.com"}])
+  }
+  const handleDelete =(id:string)=>{
+     setData(data().filter(x=>x.id === id))
+ 
   }
 
   return (
@@ -27,11 +32,16 @@ const[data,setData]=createSignal([
    <button onClick={handleClick}>Add Item</button>
    <ul>
         {data().map((item) => (
-          <li>{item.name}</li>
-        ))}
+          <div>
+            <li>{item.name}</li>
+            <button onclick={()=>handleDelete(item.id)}>Delete</button>
+            </div>
+          ))}
+
+         
       </ul>
 
-  
+ 
    
     </div>
   );
